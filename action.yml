@@ -1,4 +1,3 @@
-
 name: Satel-registry-push
 description: Pushes branch on docker registry
 inputs:
@@ -26,6 +25,10 @@ inputs:
   client-registry:
     description: Client registry address
     required: false   
+  dockerfile:
+    description: Dockerfile 
+    required: false
+    default: Dockerfile
   current-branch-name: 
     description: Provides current branch name 
     required: false    
