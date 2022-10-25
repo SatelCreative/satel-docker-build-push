@@ -51,4 +51,6 @@ then
     docker push $REGISTRY/$APP_NAME:$CLEAN_BRANCH_NAME
     
     export REGISTRY=$REGISTRY
-    export CLEAN_BRANCH_NAME=$CLEAN_BRANCH_NAME  # need these two for docker up
+    export CLEAN_BRANCH_NAME=$CLEAN_BRANCH_NAME  
+    # need these two for docker up
+fi    
