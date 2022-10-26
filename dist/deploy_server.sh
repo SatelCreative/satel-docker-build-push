@@ -11,7 +11,7 @@ DOCKERFILE=$9
 BRANCH_NAME=${10}
 TAG_NAME=${11}
 
-#echo "TAG_NAME=${TAG_NAME}"
+echo "DOCKERFILE=${DOCKERFILE}"
 
 echo "Build Server"
 if [[ $SERVER != None ]]
