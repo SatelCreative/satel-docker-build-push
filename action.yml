@@ -33,9 +33,14 @@ inputs:
     description: Provides current branch name 
     required: false    
   tag-name: 
-    description: Provides current tag name 
-    required: false  
+    description: Provides current tag name action.yml
+    required: false 
 
+outputs:
+  registry: # id of output
+    description: 'Satel or client registry'
+  clean_branch_name:
+    description: 'Branch name that was pushed to registry'
 
 runs:
   using: node16
