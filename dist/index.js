@@ -4111,19 +4111,6 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(722);
 const exec = __nccwpck_require__(710);
 
-let myOutput = '';
-let myError = '';
-
-const options = {};
-options.listeners = {
-    stdout: (data) => {
-    myOutput += data.toString();
-    },
-    stderr: (data) => {
-    myError += data.toString();
-    }
-};
-
 async function run() {
     try {
         const appName = core.getInput('app-name');
@@ -4138,9 +4125,7 @@ async function run() {
         const currentBranchName = core.getInput('current-branch-name');
         const tagName = core.getInput('tag-name');
         const src = __dirname;
-        console.log("test0", options)
-        await exec.exec(`${src}/deploy_server.sh  ${appName} ${serverPath} ${satelDockerUser} ${satelDockerPass} ${clientDockerUser} ${clientDockerPass} ${satelRegistry} ${clientRegistry} ${dockerfile} ${currentBranchName} ${tagName}`,"", options);
-        console.log("test1", options)
+        await exec.exec(`${src}/deploy_server.sh  ${appName} ${serverPath} ${satelDockerUser} ${satelDockerPass} ${clientDockerUser} ${clientDockerPass} ${satelRegistry} ${clientRegistry} ${dockerfile} ${currentBranchName} ${tagName}`) ;
     } catch (error) {
         core.setFailed(error.message);
     }
