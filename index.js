@@ -31,7 +31,7 @@ async function run() {
         let shellValues = myOutput.split('|')[1].trim().split(' ')
         var registry = shellValues[0]
         var clean_branch_name = shellValues[1];
-        
+
         core.setOutput("registry", registry);
         core.setOutput("clean_branch_name", clean_branch_name);
     } catch (error) {
