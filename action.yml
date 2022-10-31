@@ -88,13 +88,6 @@ runs:
         run: echo "EXTRA_ARGUMENTS='DEVFLAG=--dev'" >> $GITHUB_ENV  
         shell: bash
 
-      - name: Print variables
-        run: |
-            echo "APP-NAME ${{ inputs.app-name }}"
-            echo "DOCKEFILE ${{ inputs.Dockerfile }}"
-
-        shell: bash
-
       # - name: Login to Docker registry
       #   uses: docker/login-action@v2
       #   with:
@@ -107,7 +100,7 @@ runs:
         with:
           image: "${{ inputs.app-name }}"
           tags: "${{ env.CLEAN_BRANCH_NAME }}"
-          registry: env.REGISTRY
+          registry: "${{ env.REGISTRY }}"
           dockerfile: "${{ inputs.Dockerfile }}"
           buildArgs: "${{ env.EXTRA_ARGUMENTS }}"
           username: "${{ env.DOCKER_USER }}"
