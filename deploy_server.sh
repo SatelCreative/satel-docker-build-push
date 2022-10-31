@@ -14,14 +14,14 @@ echo "APP_NAME=${APP_NAME}, SERVER=${SERVER}, SATEL_DOCKER_USER=${SATEL_DOCKER_U
 echo "SATEL_REGISTRY=${SATEL_REGISTRY}, CLIENT_REGISTRY=${CLIENT_REGISTRY}, DOCKERFILE=${DOCKERFILE}, BRANCH_NAME=${BRANCH_NAME}, TAG_NAME=${TAG_NAME}"
 
 echo "Build Server"
-if [[ $CURRENT_BRANCH_NAME == 'main' ]]
+if [[ $BRANCH_NAME == 'main' ]]
 then    
     CLEAN_BRANCH_NAME='main'
 elif [[ -n $TAG_NAME ]]  
 then  
     CLEAN_BRANCH_NAME=$TAG_NAME
 else
-    CLEAN_BRANCH_NAME=${CURRENT_BRANCH_NAME////_}
+    CLEAN_BRANCH_NAME=${BRANCH_NAME////_}
 fi
 
 echo "Check if the app uses poetry"
@@ -41,6 +41,7 @@ else
     REGISTRY=$SATEL_REGISTRY    
 fi
 echo "${DOCKER_USER} ${DOCKER_PASS} ${REGISTRY}"
+echo 
 docker login --username=$DOCKER_USER --password=$DOCKER_PASS $REGISTRY
 docker build -f $DOCKERFILE . -t $REGISTRY/$APP_NAME:$CLEAN_BRANCH_NAME --build-arg DEVFLAG=$EXTRA_ARGUMENTS
 docker push $REGISTRY/$APP_NAME:$CLEAN_BRANCH_NAME  
