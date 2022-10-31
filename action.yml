@@ -50,6 +50,6 @@ runs:
       id: registry
       shell: bash
     
-    # - id: registry
-    #   run: echo "REGISTRY=$(echo $REGISTRY)" >> $GITHUB_OUTPUT 
-    #   shell: bash 
+    - id: registryprint
+      run: echo "{{ steps.registry.outputs.registry}}"
+      shell: bash 
