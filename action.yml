@@ -4,9 +4,9 @@ inputs:
   app-name:
     description: Provide version type [major, minor, patch]
     required: true
-  server-dir:
-    description: Directory for server
-    required: false  
+  # server-dir:
+  #   description: Directory for server
+  #   required: false  
   satel-docker-user:
     description: Username for satel docker registry
     required: false 
@@ -29,19 +29,80 @@ inputs:
     description: Dockerfile 
     required: false
     default: Dockerfile
-  current-branch-name: 
-    description: Provides current branch name 
-    required: false    
-  tag-name: 
-    description: Provides current tag name action.yml
-    required: false 
-
-outputs:
-  registry: # id of output
-    description: 'Satel or client registry'
-  clean_branch_name:
-    description: 'Branch name that was pushed to registry'
+  # current-branch-name: 
+  #   description: Provides current branch name 
+  #   required: false    
+  # tag-name: 
+  #   description: Provides current tag name action.yml
+  #   required: false 
 
 runs:
-  using: node16
-  main: dist/index.js
+  using: "composite"
+  steps:
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v6
+  
+      - name: Current branch name
+        run: echo "BRANCH_NAME=${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_ENV 
+        shell: bash
+
+      - name: Current tag name
+        run:  echo "TAG_NAME=$(git describe --tag --abbrev=0)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Assign clean branch name for a branch
+        if: env.BRANCH_NAME != ''
+        run: |   
+            if [[ ${{ env.BRANCH_NAME }} == 'main' ]]; then
+                echo "CLEAN_BRANCH_NAME='main'" >> $GITHUB_ENV   
+            elif [[ ${{ env.BRANCH_NAME }} != '' ]]; then
+                echo "CLEAN_BRANCH_NAME=${{env.BRANCH_NAME}}" | sed 's/\//_/'  >> $GITHUB_ENV   
+            fi 
+        shell: bash
+
+      - name: Assign clean branch name for a tag
+        if: env.TAG_NAME != ''
+        run: echo "CLEAN_BRANCH_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV   
+        shell: bash
+
+      - name: Assign registry and its credentials
+        run: |
+            if [[ -n env.TAG_NAME ]]  
+            then
+                echo "DOCKER_USER=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
+                echo "DOCKER_PASS=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
+                echo "REGISTRY=${{ inputs.client-registry }}" >> $GITHUB_ENV  
+            else
+                echo "DOCKER_USER=${{ inputs.satel-docker-user }}" >> $GITHUB_ENV  
+                echo "DOCKER_PASS=${{ inputs.satel-docker-pass }}" >> $GITHUB_ENV  
+                echo "REGISTRY=${{ inputs.satel-registry }}" >> $GITHUB_ENV  
+            fi
+        shell: bash      
+          
+      - name: Poetry check
+        run:  echo "IS_POETRY=$(cat ${{ inputs.dockerfile }}"| grep -c 'poetry')" >> $GITHUB_ENV 
+        shell: bash
+
+      - name: Add arguments for poetry
+        if: env.IS_POETRY > 0
+        run: echo "EXTRA_ARGUMENTS='DEVFLAG=--dev'" >> $GITHUB_ENV  
+        shell: bash
+
+      - name: Login to Docker registry
+        uses: docker/login-action@v2
+        with:
+          registry: env.REGISTRY
+          username: env.DOCKER_USER
+          password: env.DOCKER_USER 
+
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: "${{ inputs.app_name }}"
+          tags: env.CLEAN_BRANCH_NAME
+          registry: env.REGISTRY
+          dockerfile: "${{ inputs.Dockerfile }}"
+          buildArgs: env.EXTRA_ARGUMENTS
+          username: env.DOCKER_USER
+          password: env.DOCKER_USER 
