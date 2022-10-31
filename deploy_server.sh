@@ -47,4 +47,6 @@ docker build -f $DOCKERFILE . -t $REGISTRY/$APP_NAME:$CLEAN_BRANCH_NAME --build-
 docker push $REGISTRY/$APP_NAME:$CLEAN_BRANCH_NAME  
 
 
-echo "| $REGISTRY $CLEAN_BRANCH_NAME"
+echo "$REGISTRY" #$CLEAN_BRANCH_NAME"
+echo "::set-output name=REGISTRY::$REGISTRY"
+echo "::set-output name=CLEAN_BRANCH_NAME::$CLEAN_BRANCH_NAME"
