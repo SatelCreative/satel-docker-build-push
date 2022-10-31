@@ -18,14 +18,14 @@ echo "Build Server"
 if [[ $SERVER != None ]]
 then
     cd $SERVER
-    if [[ $CURRENT_BRANCH_NAME == 'main' ]]
+    if [[ $BRANCH_NAME == 'main' ]]
     then    
         CLEAN_BRANCH_NAME='main'
     elif [[ -n $TAG_NAME ]]  
     then  
         CLEAN_BRANCH_NAME=$TAG_NAME
     else
-        CLEAN_BRANCH_NAME=${CURRENT_BRANCH_NAME////_}
+        CLEAN_BRANCH_NAME=${BRANCH_NAME////_}
     fi
 
     cd ..
