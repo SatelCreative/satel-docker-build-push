@@ -91,6 +91,9 @@ runs:
       - name: Print variables
         run: |
             echo "${{ env.REGISTRY }}"
+            echo "${{ inputs.app_name }}"
+            echo "${{ inputs.Dockerfile }}"
+
         shell: bash
 
       # - name: Login to Docker registry
