@@ -81,7 +81,7 @@ runs:
         shell: bash      
           
       - name: Poetry check
-        run:  echo "IS_POETRY=$(cat ${{ inputs.dockerfile }}"| grep -c 'poetry')" >> $GITHUB_ENV 
+        run:  echo "IS_POETRY=$(cat ${{ inputs.dockerfile }} | grep -c 'poetry')" >> $GITHUB_ENV 
         shell: bash
 
       - name: Add arguments for poetry
