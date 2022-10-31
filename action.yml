@@ -69,15 +69,13 @@ runs:
       - name: Assign registry and its credentials
         run: |
             if [ -z ${{ env.TAG_NAME }} ]; then
-                echo "DOCKER_USER=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
-                echo "DOCKER_PASS=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
-                echo "REGISTRY=${{ inputs.client-registry }}" >> $GITHUB_ENV  
-                echo "Registry is client"
-            else
                 echo "DOCKER_USER=${{ inputs.satel-docker-user }}" >> $GITHUB_ENV  
                 echo "DOCKER_PASS=${{ inputs.satel-docker-pass }}" >> $GITHUB_ENV  
-                echo "REGISTRY=${{ inputs.satel-registry }}" >> $GITHUB_ENV  
-                echo "Registry is satel"
+                echo "REGISTRY=${{ inputs.satel-registry }}" >> $GITHUB_ENV     
+            else
+                echo "DOCKER_USER=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
+                echo "DOCKER_PASS=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
+                echo "REGISTRY=${{ inputs.client-registry }}" >> $GITHUB_ENV                 
             fi
         shell: bash      
           
@@ -102,13 +100,13 @@ runs:
       #     username: "${{ env.DOCKER_USER }}"
       #     password: "${{ env.DOCKER_USER }}"
 
-      # - name: Build & push Docker image
-      #   uses: mr-smithers-excellent/docker-build-push@v5
-      #   with:
-      #     image: "${{ inputs.app_name }}"
-      #     tags: "${{ env.CLEAN_BRANCH_NAME }}"
-      #     registry: env.REGISTRY
-      #     dockerfile: "${{ inputs.Dockerfile }}"
-      #     buildArgs: "${{ env.EXTRA_ARGUMENTS }}"
-      #     username: "${{ env.DOCKER_USER }}"
-      #     password: "${{ env.DOCKER_USER }}"
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: "${{ inputs.app_name }}"
+          tags: "${{ env.CLEAN_BRANCH_NAME }}"
+          registry: env.REGISTRY
+          dockerfile: "${{ inputs.Dockerfile }}"
+          buildArgs: "${{ env.EXTRA_ARGUMENTS }}"
+          username: "${{ env.DOCKER_USER }}"
+          password: "${{ env.DOCKER_USER }}"
