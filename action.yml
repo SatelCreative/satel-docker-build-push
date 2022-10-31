@@ -2,7 +2,7 @@ name: Satel-registry-push
 description: Pushes branch on docker registry
 inputs:
   app-name:
-    description: Provide version type [major, minor, patch]
+    description: Name of the webapp
     required: true
   # server-dir:
   #   description: Directory for server
@@ -28,7 +28,7 @@ inputs:
   dockerfile:
     description: Dockerfile 
     required: false
-    default: Dockerfile
+   # default: Dockerfile
   # current-branch-name: 
   #   description: Provides current branch name 
   #   required: false    
@@ -90,9 +90,8 @@ runs:
 
       - name: Print variables
         run: |
-            echo "${{ env.REGISTRY }}"
-            echo "${{ inputs.app_name }}"
-            echo "${{ inputs.Dockerfile }}"
+            echo "APP-NAME ${{ inputs.app_name }}"
+            echo "DOCKEFILE ${{ inputs.Dockerfile }}"
 
         shell: bash
 
