@@ -41,14 +41,15 @@ outputs:
   registry:  # id of output
     description: 'Satel or client registry'
     value:  ${{ steps.registry.outputs.registry }}
-  clean_branch_name:
-    description: 'Branch name that was pushed to registry'
+  # clean_branch_name:
+  #   description: 'Branch name that was pushed to registry'
 runs:
   using: "composite"
   steps:
     - run: ${{ github.action_path }}/deploy_server.sh ${{ inputs.app-name }} ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} ${{ inputs.satel-registry }} ${{ inputs.client-registry }} ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} 
+      id: registry
       shell: bash
     
-    - id: registry
-      run: echo "REGISTRY=$(echo $REGISTRY)" >> $GITHUB_OUTPUT 
-      shell: bash 
+    # - id: registry
+    #   run: echo "REGISTRY=$(echo $REGISTRY)" >> $GITHUB_OUTPUT 
+    #   shell: bash 
