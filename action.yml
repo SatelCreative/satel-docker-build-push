@@ -41,8 +41,10 @@ outputs:
   registry:  # id of output
     description: 'Satel or client registry'
     value:  ${{ steps.registry.outputs.registry }}
-  # clean_branch_name:
-  #   description: 'Branch name that was pushed to registry'
+  clean_branch_name:
+    description: 'Branch name that was pushed to registry'
+    value:  ${{ steps.registry.outputs.CLEAN_BRANCH_NAME }}
+    
 runs:
   using: "composite"
   steps:
@@ -50,6 +52,6 @@ runs:
       id: registry
       shell: bash
     
-    # - id: registry
-    #   run: echo "REGISTRY=$(echo $REGISTRY)" >> $GITHUB_OUTPUT 
-    #   shell: bash 
+    - id: registryprint
+      run: echo "webaruuner{{ steps.registry.outputs.registry}}"
+      shell: bash 
