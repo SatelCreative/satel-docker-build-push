@@ -68,7 +68,7 @@ runs:
 
       - name: Assign registry and its credentials
         run: |
-            if [[ -n ${{ env.TAG_NAME }} ]]; then
+            if [[ -z ${{ env.TAG_NAME }} ]]; then
                 echo "DOCKER_USER=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
                 echo "DOCKER_PASS=${{ inputs.client-docker-user }}" >> $GITHUB_ENV  
                 echo "REGISTRY=${{ inputs.client-registry }}" >> $GITHUB_ENV  
