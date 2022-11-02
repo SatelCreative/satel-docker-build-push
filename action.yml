@@ -46,10 +46,10 @@ runs:
   using: "composite"
   steps:
     - run: ${{ github.action_path }}/deploy_server.sh ${{ inputs.app-name }} 
-           ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
-           ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} 
-           ${{ inputs.satel-registry }} ${{ inputs.client-registry }} 
-           ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} 
+            ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
+            ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} 
+            ${{ inputs.satel-registry }} ${{ inputs.client-registry }} 
+            ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} 
       id: registry
       shell: bash
     
