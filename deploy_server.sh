@@ -21,7 +21,7 @@ elif [[ -n $TAG_NAME ]]
 then  
     CLEAN_BRANCH_NAME=$TAG_NAME
 else
-    CLEAN_BRANCH_NAME=${BRANCH_NAME////_} #Replace / on branch name wih _ for portainer
+    CLEAN_BRANCH_NAME=${BRANCH_NAME////_} # Replace / in branch name with _ for portainer
 fi
 
 echo "Check if the app uses poetry via Dockerfile"
@@ -30,7 +30,7 @@ if grep -i "poetry" $DOCKERFILE; then
 fi
 
 echo "Build and Push branch image to docker"
-if [[ -n $TAG_NAME ]]   # if it's a tag push to client registry
+if [[ -n $TAG_NAME ]]   # if it's a tag, push to client registry
 then
     DOCKER_USER=$CLIENT_DOCKER_USER
     DOCKER_PASS=$CLIENT_DOCKER_PASS
