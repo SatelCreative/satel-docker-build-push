@@ -1,4 +1,5 @@
-# Satel Registry Push
+# Satel Docker Build Push
+
 This centralized GitHub action pushes a docker image to registry 
 
 ## Usage 
