@@ -38,7 +38,7 @@ outputs:
   registry:  # id of output
     description: 'Satel or client registry'
     value:  ${{ steps.registry.outputs.registry }}
-  clean_branch_name:
+  clean-branch-name:
     description: 'Branch name that was pushed to registry'
     value:  ${{ steps.registry.outputs.CLEAN_BRANCH_NAME }}
     
