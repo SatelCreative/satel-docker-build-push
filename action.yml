@@ -45,7 +45,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/deploy_server.sh ${{ inputs.app-name }} 
+    - run: ${{ github.action_path }}/DeployDockerImage.sh ${{ inputs.app-name }} 
             ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
             ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} 
             ${{ inputs.satel-registry }} ${{ inputs.client-registry }} 
