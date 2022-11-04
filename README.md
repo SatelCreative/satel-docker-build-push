@@ -43,4 +43,4 @@ on:
  - `app-name` can be `st-pim` or `sb-pim` for example
  - `clean-branch-name` & `tag-name` parameters are set in a previous step  
  - `satel & client docker-user` & `satel & client docker-pass` are secrets added from the settings
- - `clean-branch-name` is an output generated using this action and needed and other steps/jobs
+ - `clean-branch-name` is an output generated using this action and needed for other steps/jobs
