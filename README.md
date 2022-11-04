@@ -6,27 +6,32 @@ This centralized GitHub action pushes a docker image to registry
 ```yml
 name: "Push to docker image to registry"
 on:
+  pull_request:
+    types:
+      - opened
   push:
+    tags:
+      - "*"
     branches:
       - main  
-deploy-to-qa:
-    name: Registry push
-    needs: [generate-variables, build-client, build-server]
-    if: github.ref == 'refs/heads/main' # run only on main
+    
+    build-server:
+    name: Build server
+    needs: [generate-variables, build-client]
     runs-on: <host_name>
-    steps:
-      - name: Push client image to registry
-        id: registry-push
-        uses: SatelCreative/satel-registry-push@feature/webapp-deployment-shell
+    steps:    
+      - name: Build & Push server image to registry
+        id: registry-build-push
+        uses: SatelCreative/satel-docker-build-push@v1
         with:
-          app-name: <app-name>
+          app-name: st-pim
           satel-docker-user: ${{ secrets.SATEL_DOCKER_USER }}
           satel-docker-pass: ${{ secrets.SATEL_DOCKER_PASS }}
           client-docker-user: ${{ secrets.CLIENT_DOCKER_USER }}
           client-docker-pass: ${{ secrets.CLIENT_DOCKER_PASS }}
           satel-registry: docker.satel.ca
           client-registry: sb-docker.satel.ca
-          dockerfile: <Dockerfile>
+          dockerfile: Dockerfile
           current-branch-name: ${{needs.generate-variables.outputs.branch-name}}
           tag-name: ${{needs.generate-variables.outputs.tag-name}}  
 ```
