@@ -19,6 +19,9 @@ on:
     name: Build server
     needs: [generate-variables, build-client]
     runs-on: <host_name>
+    # Map a step output to a job output, used in other jobs
+    outputs:
+      clean-branch-name: ${{ steps.registry-build-push.outputs.clean-branch-name }}
     steps:    
       - name: Build & Push server image to registry
         id: registry-build-push
@@ -39,4 +42,5 @@ on:
  - `host_name` is `self-hosted` or the name of server where the action runner is hosted, `cosmicray` for example
  - `app-name` can be `st-pim` or `sb-pim` for example
  - `clean-branch-name` & `tag-name` parameters are set in a previous step  
- - `satel & client docker-user` & `satel & client docker-pass` are secrets added from the settings.           
+ - `satel & client docker-user` & `satel & client docker-pass` are secrets added from the settings
+ - `clean-branch-name` is an output generated using this action and needed and other steps/jobs
