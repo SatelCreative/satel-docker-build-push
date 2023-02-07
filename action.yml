@@ -33,6 +33,10 @@ inputs:
   tag-name: 
     description: Provides current tag name action.yml
     required: false 
+  work-dir:
+    description: location of all the docker files 
+    required: true
+    default: None    
     
 outputs:
   registry:  # id of output
@@ -49,7 +53,7 @@ runs:
             ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
             ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} 
             ${{ inputs.satel-registry }} ${{ inputs.client-registry }} 
-            ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} 
+            ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} ${{ inputs.work-dir }}
       id: registry
       shell: bash
     
