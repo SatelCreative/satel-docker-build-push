@@ -5,6 +5,10 @@ inputs:
   app-name:
     description: Name of the webapp
     required: true 
+  work-dir:
+    description: location of all the docker files 
+    required: true
+    default: None   
   satel-docker-user:
     description: Username for satel docker registry
     required: false 
@@ -33,10 +37,7 @@ inputs:
   tag-name: 
     description: Provides current tag name action.yml
     required: false 
-  work-dir:
-    description: location of all the docker files 
-    required: true
-    default: None    
+    
     
 outputs:
   registry:  # id of output
