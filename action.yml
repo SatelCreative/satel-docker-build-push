@@ -51,10 +51,10 @@ runs:
   using: "composite"
   steps:
     - run: ${{ github.action_path }}/DeployDockerImage.sh ${{ inputs.app-name }} 
-            ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
+            ${{ inputs.work-dir }} ${{ inputs.satel-docker-user }} ${{ inputs.satel-docker-pass }} 
             ${{ inputs.client-docker-user }} ${{ inputs.client-docker-pass }} 
             ${{ inputs.satel-registry }} ${{ inputs.client-registry }} 
-            ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }} ${{ inputs.work-dir }}
+            ${{ inputs.dockerfile }} ${{ inputs.current-branch-name }} ${{ inputs.tag-name }}
       id: registry
       shell: bash
     
