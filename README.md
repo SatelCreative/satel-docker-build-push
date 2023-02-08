@@ -29,7 +29,7 @@ on:
         uses: SatelCreative/satel-docker-build-push@v1
         with:
           app-name: <APP-NAME>
-          # app-name can be st-pim or sb-pim for example
+          # APP-NAME can be st-pim or sb-pim for example
           work-dir: <WORK-DIR>
           # WORK-DIR, where all the docker related files are located
           satel-docker-user: ${{ secrets.SATEL_DOCKER_USER }}
